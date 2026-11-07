@@ -8,8 +8,7 @@ const FECHA_BODA = '2027-03-20T16:30:00-04:00';
 // Enlaces de los botones. Si uno queda vacío, el botón muestra "disponible muy pronto".
 const ENLACES = {
     fotos: 'https://photos.app.goo.gl/6ou2zR5AR3tNfXmc8',   // Álbum compartido de Google Fotos
-    asistencia: '',                                         // PENDIENTE: formulario de confirmación
-    regalos: ''                                             // PENDIENTE: mesa de regalos
+    asistencia: 'https://docs.google.com/forms/d/e/1FAIpQLSc8tCEwaFVjesAfWgGbxIS2rOAi7MF1sNwVJIJTxCsb18ir9g/viewform'   // Google Forms
 };
 const UBICACIONES = {
     // Club Naval para Oficiales (ceremonia y recepción en el mismo lugar)
@@ -24,30 +23,157 @@ let pasesMax = 0;
 function setupIntroEnvelope() {
     const overlay = document.getElementById('introOverlay');
     if (!overlay) { enterInvitation(); return; }
-    let opened = false;
+    const carta = document.getElementById('carta');
+    const video = document.getElementById('introVideo');
+    let opened = false, finished = false;
     document.documentElement.style.overflow = 'hidden';
     window.scrollTo(0, 0);
+
+    // Al terminar el video (termina en luz crema) se desvanece y queda la carta
+    function finish() {
+        if (finished) return;
+        finished = true;
+        if (carta) {
+            document.body.classList.add('carta-visible');
+            escribirCarta(carta);
+        } else {
+            document.documentElement.style.overflow = '';
+        }
+        overlay.classList.add('is-done');
+        setTimeout(function () { overlay.remove(); }, 950);
+    }
 
     function open() {
         if (opened) return;
         opened = true;
         startMusic();
-        enterInvitation();
+        showMusicPlayer();
+        if (carta) document.body.classList.add('carta-activa');
+        else enterInvitation();
         overlay.classList.add('is-opening');
-        setTimeout(function () {
-            document.documentElement.style.overflow = '';
-            overlay.remove();
-        }, 3200);
+        if (video) {
+            video.addEventListener('ended', finish);
+            video.addEventListener('timeupdate', function () {
+                if (video.duration && video.currentTime >= video.duration - 0.35) finish();
+            });
+            const p = video.play();
+            if (p && p.catch) p.catch(finish);
+            setTimeout(finish, 11000); // por si el video no carga
+        } else {
+            finish();
+        }
     }
     overlay.addEventListener('click', open);
     overlay.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') open(); });
     overlay.tabIndex = 0;
 }
 
-function enterInvitation() {
-    document.body.classList.add('invite-enter', 'hero-revealed');
+// Cierra la carta y muestra la invitación
+function cerrarCarta() {
+    const carta = document.getElementById('carta');
+    if (!carta || carta.classList.contains('is-closing')) return;
+    carta.classList.add('is-closing');
+    enterInvitation();
+    setTimeout(function () {
+        carta.remove();
+        document.body.classList.remove('carta-activa', 'carta-visible');
+        document.documentElement.style.overflow = '';
+    }, 1000);
+}
+const CARTA_TIEMPO_LECTURA = 6000; // ms que el mensaje completo queda visible antes de entrar solo
+
+// ---------- Carta: efecto de escritura ----------
+function prepararEscritura(el) {
+    // Envuelve cada letra en <span class="ch"> (agrupadas por palabra para que no se corten)
+    const letras = [];
+    (function recorrer(nodo) {
+        Array.from(nodo.childNodes).forEach(function (n) {
+            if (n.nodeType === 3) {
+                const frag = document.createDocumentFragment();
+                n.textContent.split(/(\s+)/).forEach(function (trozo) {
+                    if (!trozo) return;
+                    if (/^\s+$/.test(trozo)) { frag.appendChild(document.createTextNode(trozo)); return; }
+                    const pal = document.createElement('span'); pal.className = 'pal';
+                    Array.from(trozo).forEach(function (c) {
+                        const s = document.createElement('span'); s.className = 'ch'; s.textContent = c;
+                        pal.appendChild(s); letras.push(s);
+                    });
+                    frag.appendChild(pal);
+                });
+                n.replaceWith(frag);
+            } else if (n.nodeType === 1 && n.tagName !== 'BR') recorrer(n);
+        });
+    })(el);
+    return letras;
+}
+
+function escribirCarta(carta) {
+    if (!carta) return;
+    const pasos = Array.from(carta.querySelectorAll('[data-tipo]'));
+    const reducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const timers = [];
+    let terminado = false;
+    let entrada = null;
+    function programarEntrada() {
+        if (entrada) return;
+        entrada = setTimeout(cerrarCarta, CARTA_TIEMPO_LECTURA);
+        const btn = document.getElementById('cartaEntrar');
+        if (btn) btn.classList.add('on'); // botón discreto para no esperar
+        const sc = carta.querySelector('.carta-scroll');
+        if (sc && sc.scrollHeight > sc.clientHeight + 2) sc.scrollTo({ top: sc.scrollHeight, behavior: 'smooth' });
+    }
+    const btnEntrar = document.getElementById('cartaEntrar');
+    if (btnEntrar) btnEntrar.addEventListener('click', function (e) { e.stopPropagation(); clearTimeout(entrada); cerrarCarta(); });
+
+    function mostrarTodo() {
+        if (terminado) return;
+        terminado = true;
+        timers.forEach(clearTimeout);
+        carta.querySelectorAll('.ch, [data-tipo]').forEach(function (e) { e.classList.add('on'); });
+        const sc = carta.querySelector('.carta-scroll');
+        if (sc) sc.scrollTo({ top: sc.scrollHeight, behavior: 'smooth' });
+        programarEntrada();
+    }
+    if (reducido) { pasos.forEach(function (p) { if (p.dataset.tipo === 'escribir') prepararEscritura(p); }); mostrarTodo(); return; }
+
+    // Si la carta no cabe en la pantalla, se desplaza sola siguiendo lo que se escribe
+    const scroller = carta.querySelector('.carta-scroll');
+    function seguir(el) {
+        if (!scroller || scroller.scrollHeight <= scroller.clientHeight + 2) return;
+        const r = el.getBoundingClientRect(), sr = scroller.getBoundingClientRect();
+        if (r.bottom > sr.bottom - 20) scroller.scrollBy({ top: r.bottom - sr.bottom + 40, behavior: 'smooth' });
+    }
+    let t = 0;
+    pasos.forEach(function (p) {
+        const tipo = p.dataset.tipo;
+        timers.push(setTimeout(function () { seguir(p); }, t));
+        if (tipo === 'escribir') {
+            const vel = parseInt(p.dataset.vel, 10) || 18;
+            prepararEscritura(p).forEach(function (s) {
+                timers.push(setTimeout(function () { s.classList.add('on'); }, t));
+                t += vel;
+            });
+            t += 450;
+        } else {
+            timers.push(setTimeout(function () { p.classList.add('on'); }, t));
+            t += tipo === 'trazo' ? 2600 : 600;
+        }
+    });
+    timers.push(setTimeout(function () { terminado = true; programarEntrada(); }, t + 600));
+    // Tocar la carta mientras se escribe la completa al instante
+    carta.addEventListener('click', function (e) {
+        if (!terminado) mostrarTodo();
+    });
+}
+
+function showMusicPlayer() {
     const mp = document.getElementById('musicPlayer');
     if (mp) mp.style.display = 'block';
+}
+
+function enterInvitation() {
+    document.body.classList.add('invite-enter', 'hero-revealed');
+    showMusicPlayer();
 }
 
 // ---------- Música ----------
@@ -195,8 +321,7 @@ function openLocation(key) {
 function initializeLinks() {
     const avisos = {
         fotos: 'El álbum de fotos estará disponible muy pronto',
-        asistencia: 'La confirmación estará disponible muy pronto',
-        regalos: 'La mesa de regalos estará disponible muy pronto'
+        asistencia: 'La confirmación estará disponible muy pronto'
     };
     document.querySelectorAll('[data-enlace]').forEach(function (a) {
         const key = a.dataset.enlace;

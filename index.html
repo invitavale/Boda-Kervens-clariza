@@ -4,22 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kervens & Clariza - Invitación de Boda</title>
-    <meta name="description" content="Te invitamos a celebrar nuestra boda el 20 de marzo de 2027.">
+    <meta name="description" content="Kervens & Clariza · Sábado 20 de marzo de 2027, 4:30 p.m. · Club Naval para Oficiales, Santo Domingo Este.">
 
     <!-- Vista previa al compartir el enlace (WhatsApp, Facebook, etc.) -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://invitavale.com/Boda-chanpam-2B/">
+    <meta property="og:url" content="https://invitavale.com/Boda-Kervens-clariza/">
+    <link rel="canonical" href="https://invitavale.com/Boda-Kervens-clariza/">
     <meta property="og:title" content="Kervens & Clariza · ¡Nos casamos!">
-    <meta property="og:description" content="20 de marzo de 2027 · Te invitamos a celebrar nuestra boda 💍">
-    <meta property="og:image" content="https://invitavale.com/Boda-chanpam-2B/og-portada.jpg?v=5">
-    <meta property="og:image:secure_url" content="https://invitavale.com/Boda-chanpam-2B/og-portada.jpg?v=5">
+    <meta property="og:description" content="Sábado 20 de marzo de 2027 · 4:30 p.m. · Club Naval para Oficiales, Santo Domingo Este. Te invitamos a celebrar nuestra boda 💍">
+    <meta property="og:site_name" content="Invitavale">
+    <meta property="og:image:alt" content="Kervens y Clariza · ¡Nos casamos! · Sábado 20 de marzo de 2027">
+    <meta property="og:image" content="https://invitavale.com/Boda-Kervens-clariza/og-portada.jpg?v=7">
+    <meta property="og:image:secure_url" content="https://invitavale.com/Boda-Kervens-clariza/og-portada.jpg?v=7">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="es_DO">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://invitavale.com/Boda-chanpam-2B/og-portada.jpg?v=5">
-    <link rel="preload" as="image" href="portada-bn.jpg?v=1">
+    <meta name="twitter:title" content="Kervens & Clariza · ¡Nos casamos!">
+    <meta name="twitter:description" content="Sábado 20 de marzo de 2027 · 4:30 p.m. · Club Naval para Oficiales">
+    <meta name="twitter:image" content="https://invitavale.com/Boda-Kervens-clariza/og-portada.jpg?v=7">
+    <link rel="preload" as="image" href="sobre-inicio.jpg?v=1">
+    <link rel="preload" as="image" href="fondo-carta.jpg?v=2">
+    <link rel="preload" as="image" href="portada.jpg?v=2">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pinyon+Script&family=Cormorant+SC:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
@@ -27,11 +34,34 @@
 </head>
 <body>
     <!-- Intro: sobre de dos puertas (tocar para abrir; arranca la música) -->
-    <div id="introOverlay" class="intro-overlay" role="button" aria-label="Toca el sello para abrir la invitación">
-        <div class="sobre-cuerpo"></div>
-        <div class="sobre-solapa-wrap"><div class="sobre-solapa"></div></div>
-        <div class="sello" aria-hidden="true"><img src="iconos/sello-oro.webp" alt="" width="420" height="415"></div>
+    <div id="introOverlay" class="intro-overlay" role="button" aria-label="Toca para abrir la invitación">
+        <video id="introVideo" class="intro-video" src="sobre.mp4?v=1" poster="sobre-inicio.jpg?v=1" muted playsinline preload="auto"></video>
         <p class="intro-hint">Toca para abrir</p>
+    </div>
+
+    <!-- Carta de bienvenida: aparece al abrir el sobre, antes de la invitación -->
+    <div id="carta" class="carta" role="dialog" aria-label="Mensaje de los novios">
+        <div class="carta-scroll">
+            <div class="carta-contenido">
+                <div class="carta-cuerpo">
+                    <p class="carta-texto" data-tipo="escribir" data-vel="32">Después de estos años de caminar juntos, hemos decidido unir nuestras vidas en matrimonio ante Dios, por lo que nos complace que sean partícipes de este momento tan especial.</p>
+                    <blockquote class="carta-cita">
+                        <p data-tipo="escribir" data-vel="26">“Así que no son ya más dos, sino una sola carne; por tanto, lo que Dios juntó, no lo separe el hombre.”</p>
+                        <cite data-tipo="escribir" data-vel="60">Marcos 10:8-9</cite>
+                    </blockquote>
+                    <span class="carta-linea" data-tipo="aparecer"></span>
+                    <p class="carta-sc" data-tipo="escribir" data-vel="42">Con la bendición de Dios<br>y de nuestros padres</p>
+                    <div class="carta-padres">
+                        <p data-tipo="escribir" data-vel="42">Paul Ones Elise &amp; Marthe Elise</p>
+                        <p data-tipo="escribir" data-vel="42">José Féliz &amp; Clara Beronia de Féliz</p>
+                    </div>
+                    <p class="carta-nos" data-tipo="escribir" data-vel="95">¡Nos casamos!</p>
+                    <p class="carta-nombres" data-tipo="trazo">Kervens <span>&amp;</span> Clariza</p>
+                    <p class="carta-texto" data-tipo="escribir" data-vel="32">Consagraremos nuestra unión y queremos que sean testigos de este momento tan especial.</p>
+                </div>
+                <button class="carta-entrar" id="cartaEntrar" type="button">Entrar <span aria-hidden="true">›</span></button>
+            </div>
+        </div>
     </div>
 
     <!-- Reproductor de música -->
@@ -44,7 +74,7 @@
 
     <!-- 1. PORTADA (se mantiene igual) -->
     <div class="hero-section">
-        <img class="hero-bg" src="portada-bn.jpg?v=1" alt="Portada boda Kervens y Clariza">
+        <img class="hero-bg" src="portada.jpg?v=2" alt="Portada boda Kervens y Clariza">
         <div class="hero-names" aria-label="Nos casamos: Kervens y Clariza">
             <p class="hn-kicker">Nos casamos</p>
             <p class="hn-names">Kervens <span class="hn-amp">&amp;</span> Clariza</p>
@@ -101,7 +131,7 @@
         </section>
 
         <!-- 4. FOTO COMPLETA -->
-        <figure class="foto-full"><img src="foto-bn1.jpg?v=1" alt="Kervens y Clariza" loading="lazy" decoding="async"></figure>
+        <figure class="foto-full"><img src="foto-itinerario.jpg?v=2" alt="Clariza mostrando su anillo de compromiso junto a Kervens" loading="lazy" decoding="async"></figure>
 
         <!-- 5. ITINERARIO -->
         <section class="sec sec-itinerario">
@@ -154,6 +184,7 @@
                     <li><span class="sw" style="--c:#B9A997"></span>Taupe</li>
                     <li><span class="sw" style="--c:#FFF6E8"></span>Crema</li>
                     <li><span class="sw" style="--c:#F4EFE4"></span>Marfil</li>
+                    <li><span class="sw" style="--c:#1A1A1A"></span>Negro</li>
                 </ul>
                 <p class="paleta-nota"><span class="sw" style="--c:#C8B18E"></span>Champán beige, reservado para el novio</p>
             </div>
@@ -177,21 +208,16 @@
                     <svg viewBox="0 0 24 48" aria-hidden="true"><path d="M20 2 4 24l16 22" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
                 </button>
                 <div class="gal-track" id="galTrack">
-                    <figure><img src="galeria/g1.jpg" alt="Kervens y Clariza" loading="lazy"></figure>
-                    <figure><img src="galeria/g2.jpg" alt="Kervens y Clariza abrazados" loading="lazy"></figure>
-                    <figure><img src="galeria/g3.jpg" alt="Kervens y Clariza en sesión de fotos" loading="lazy"></figure>
-                    <figure><img src="galeria/g4.jpg" alt="Selfie con amigos" loading="lazy"></figure>
-                    <figure><img src="galeria/g5.jpg" alt="Foto con amigos" loading="lazy"></figure>
-                    <figure><img src="galeria/g6.jpg" alt="Los novios con sus amigos" loading="lazy"></figure>
-                    <figure><img src="galeria/g7.jpg" alt="Los padrinos" loading="lazy"></figure>
-                    <figure><img src="galeria/g8.jpg" alt="Detalle de la novia" loading="lazy"></figure>
-                    <figure><img src="galeria/g9.jpg" alt="Momento divertido de la boda" loading="lazy"></figure>
+                    <figure><img src="galeria/g1.jpg?v=2" alt="Kervens y Clariza tomados de la mano mostrando el anillo" loading="lazy"></figure>
+                    <figure><img src="galeria/g2.jpg?v=2" alt="Clariza y Kervens riendo juntos" loading="lazy" style="object-position: 70% center"></figure>
+                    <figure><img src="galeria/g3.jpg?v=2" alt="Kervens y Clariza sonriendo" loading="lazy"></figure>
+                    <figure><img src="galeria/g4.jpg?v=2" alt="Kervens y Clariza abrazados" loading="lazy"></figure>
                 </div>
                 <button class="gal-btn gal-next" type="button" aria-label="Foto siguiente">
                     <svg viewBox="0 0 24 48" aria-hidden="true"><path d="m4 2 16 22L4 46" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
                 </button>
             </div>
-            <p class="gal-contador"><span id="galActual">1</span> / <span id="galTotal">9</span></p>
+            <p class="gal-contador"><span id="galActual">1</span> / <span id="galTotal">4</span></p>
             <div class="compartir-fotos">
                 <img class="ilus sk-subir" src="iconos/subir-fotos.webp" alt="Subir fotos" width="498" height="520">
                 <p class="texto-it">¿Tomaste fotos en la boda?<br>Compártelas con nosotros y ayúdanos a guardar cada momento.</p>
@@ -204,7 +230,7 @@
             <h2 class="titulo-esp">Regalos</h2>
             <p class="texto-it">Nuestro mejor regalo será su compañía, pero si desean hacernos un obsequio, preparamos una mesa de regalos para ustedes.</p>
             <img class="sketch sk-regalo" src="iconos/insp/regalo.webp" alt="Caja de regalo">
-            <a class="btn-negro btn-enlace" href="#" data-enlace="regalos" target="_blank" rel="noopener">Ver mesa de regalos</a>
+            <button class="btn-negro btn-enlace" type="button" onclick="abrirMesaRegalos()">Ver mesa de regalos</button>
 
             <!-- Pases: se muestra cuando el enlace trae ?pases=2 o ?invitados=Nombre1,Nombre2 -->
             <div class="arco arco-pases" id="pasesArco" hidden>
@@ -224,11 +250,12 @@
         </section>
 
         <!-- 11. FOTO FINAL A PANTALLA COMPLETA -->
-        <figure class="foto-final"><img src="foto-bn3.jpg?v=1" alt="Kervens y Clariza" loading="lazy" decoding="async"></figure>
+        <figure class="foto-final"><img src="foto-final.jpg?v=2" alt="Kervens y Clariza caminando de la mano" loading="lazy" decoding="async"></figure>
     </main>
 
     <div id="toast" class="toast" role="status"></div>
 
     <script src="JAVAB.js?v=30" defer></script>
+    <script src="regalos.js?v=2" defer></script>
 </body>
 </html>
