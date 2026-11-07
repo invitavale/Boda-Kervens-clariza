@@ -157,6 +157,7 @@
         modal.querySelector('#mrAdminForm').addEventListener('submit', function (e) {
             e.preventDefault(); verNombres();
         });
+        initLiberar();
     }
 
     function cerrarForm(card) {
@@ -224,26 +225,57 @@
         });
     }
 
-    function verNombres() {
-        const pin = modal.querySelector('#mrPin').value;
+    let pinNovios = '';
+
+    function verNombres(pinGuardado) {
+        const pin = pinGuardado || modal.querySelector('#mrPin').value;
         const err = modal.querySelector('#mrAdminError');
         const lista = modal.querySelector('#mrAdminLista');
-        err.textContent = 'Cargando…';
-        rpc('regalos_admin_list', { p_event: EVENTO, p_pin: pin }).then(function (r) {
-            if (!r || !r.ok) { err.textContent = 'PIN incorrecto.'; lista.hidden = true; return; }
+        if (!pinGuardado) err.textContent = 'Cargando…';
+        return rpc('regalos_admin_list', { p_event: EVENTO, p_pin: pin }).then(function (r) {
+            if (!r || !r.ok) { err.textContent = 'PIN incorrecto.'; lista.hidden = true; pinNovios = ''; return; }
+            pinNovios = pin;
             err.textContent = '';
             const porItem = {}; (r.claims || []).forEach(function (c) { porItem[c.item_id] = c; });
-            let html = '<p class="mr-admin-resumen">' + (r.claims || []).length + ' de ' + TODOS.length + ' regalos elegidos</p><ul>';
+            let html = '<p class="mr-admin-resumen">' + (r.claims || []).length + ' de ' + TODOS.length + ' regalos elegidos</p>' +
+                '<p class="mr-admin-ayuda">Toca «Liberar» para que un regalo vuelva a estar disponible.</p><ul>';
             TODOS.forEach(function (i) {
                 const c = porItem[i.id];
                 const fecha = c ? new Date(c.created_at).toLocaleDateString('es-DO', { day: 'numeric', month: 'short' }) : '';
-                html += '<li class="' + (c ? 'si' : 'no') + '"><span class="ad-reg">' + esc(i.t) + '</span>' +
-                    (c ? '<span class="ad-nom">' + esc(c.guest_name) + ' <small>' + fecha + '</small></span>' : '<span class="ad-nom libre">Disponible</span>') + '</li>';
+                html += '<li class="' + (c ? 'si' : 'no') + '" data-id="' + i.id + '"><span class="ad-reg">' + esc(i.t) + '</span>' +
+                    (c ? '<span class="ad-der"><span class="ad-nom">' + esc(c.guest_name) + ' <small>' + fecha + '</small></span>' +
+                         '<span class="ad-acc"><button type="button" class="ad-liberar">Liberar</button>' +
+                         '<span class="ad-confirma" hidden>¿Liberar? <button type="button" class="ad-si">Sí</button><button type="button" class="ad-no">No</button></span></span></span>'
+                       : '<span class="ad-nom libre">Disponible</span>') + '</li>';
             });
             lista.innerHTML = html + '</ul>';
             lista.hidden = false;
             modal.querySelector('#mrAdminForm').hidden = true;
         }).catch(function () { err.textContent = 'No se pudo conectar. Inténtalo de nuevo.'; });
+    }
+
+    // Liberar un regalo (solo novios, con el PIN ya verificado)
+    function initLiberar() {
+        const lista = modal.querySelector('#mrAdminLista');
+        lista.addEventListener('click', function (e) {
+            const li = e.target.closest('li[data-id]'); if (!li) return;
+            const btn = li.querySelector('.ad-liberar'), conf = li.querySelector('.ad-confirma');
+            if (e.target.closest('.ad-liberar')) { btn.hidden = true; conf.hidden = false; }
+            else if (e.target.closest('.ad-no')) { btn.hidden = false; conf.hidden = true; }
+            else if (e.target.closest('.ad-si')) {
+                const id = li.dataset.id;
+                conf.textContent = 'Liberando…';
+                rpc('regalos_admin_release', { p_event: EVENTO, p_pin: pinNovios, p_item_id: id }).then(function (r) {
+                    if (!r || !r.ok) throw new Error('pin');
+                    tomados.delete(id); mios.delete(id); guardarMios();
+                    pintar();
+                    if (typeof showToast === 'function') showToast('«' + POR_ID[id].t + '» vuelve a estar disponible');
+                    return verNombres(pinNovios);
+                }).catch(function () {
+                    conf.textContent = 'No se pudo liberar. Inténtalo de nuevo.';
+                });
+            }
+        });
     }
 
     function abrir() {

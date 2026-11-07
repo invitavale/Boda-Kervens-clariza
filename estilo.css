@@ -524,3 +524,16 @@ html.mr-abierto, html.mr-abierto body { overflow: hidden; }
 .carta .carta-entrar.on { opacity: 1; visibility: visible; transition: opacity 1.2s ease, color .3s ease; }
 .carta .carta-entrar:hover, .carta .carta-entrar:focus-visible { color: var(--tinta); }
 .carta .carta-entrar span { font-style: normal; margin-left: .2em; }
+
+/* Novios: liberar regalos */
+.mr-admin-ayuda { text-align: center; font-style: italic; font-size: .95rem; color: #8b7b6b; margin: -.2rem 0 .6rem; }
+.mr-admin-lista li { align-items: flex-start; }
+.ad-der { display: flex; flex-direction: column; align-items: flex-end; gap: .3rem; text-align: right; }
+.ad-acc { font-family: var(--serif); font-size: .95rem; }
+.ad-liberar, .ad-si, .ad-no { border-radius: 999px; padding: .2rem .8rem; cursor: pointer; font-family: var(--sc); font-size: .85rem; letter-spacing: .06em; }
+.ad-liberar { border: 1px solid rgba(138,59,28,.45); background: transparent; color: #8a3b1c; }
+.ad-liberar:hover { background: rgba(138,59,28,.08); }
+.ad-confirma { display: inline-flex; align-items: center; gap: .35rem; font-style: italic; color: #8a3b1c; }
+.ad-si { border: 0; background: #8a3b1c; color: #fff; }
+.ad-no { border: 1px solid rgba(75,46,32,.35); background: transparent; color: var(--tinta); }
+.mr-admin-lista [hidden] { display: none !important; }
