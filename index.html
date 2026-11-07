@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kervens & Clariza - Invitación de Boda</title>
+    <meta name="description" content="Te invitamos a celebrar nuestra boda el 20 de marzo de 2027.">
+
+    <!-- Vista previa al compartir el enlace (WhatsApp, Facebook, etc.) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://invitavale.com/Boda-chanpam-2B/">
+    <meta property="og:title" content="Kervens & Clariza · ¡Nos casamos!">
+    <meta property="og:description" content="20 de marzo de 2027 · Te invitamos a celebrar nuestra boda 💍">
+    <meta property="og:image" content="https://invitavale.com/Boda-chanpam-2B/og-portada.jpg?v=5">
+    <meta property="og:image:secure_url" content="https://invitavale.com/Boda-chanpam-2B/og-portada.jpg?v=5">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="es_DO">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://invitavale.com/Boda-chanpam-2B/og-portada.jpg?v=5">
+    <link rel="preload" as="image" href="portada-bn.jpg?v=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pinyon+Script&family=Cormorant+SC:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilo.css?v=1">
+</head>
+<body>
+    <!-- Intro: sobre de dos puertas (tocar para abrir; arranca la música) -->
+    <div id="introOverlay" class="intro-overlay" role="button" aria-label="Toca el sello para abrir la invitación">
+        <div class="sobre-cuerpo"></div>
+        <div class="sobre-solapa-wrap"><div class="sobre-solapa"></div></div>
+        <div class="sello" aria-hidden="true"><img src="iconos/sello-oro.webp" alt="" width="420" height="415"></div>
+        <p class="intro-hint">Toca para abrir</p>
+    </div>
+
+    <!-- Reproductor de música -->
+    <div id="musicPlayer" class="music-player" style="display: none;">
+        <button id="musicToggle" class="music-button" title="Reproducir/Pausar música" aria-label="Reproducir o pausar música">
+            <svg id="volumeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none"></svg>
+        </button>
+    </div>
+    <audio id="bgMusic" src="musica-fondo.mp3?v=3" preload="auto" loop playsinline></audio>
+
+    <!-- 1. PORTADA (se mantiene igual) -->
+    <div class="hero-section">
+        <img class="hero-bg" src="portada-bn.jpg?v=1" alt="Portada boda Kervens y Clariza">
+        <div class="hero-names" aria-label="Nos casamos: Kervens y Clariza">
+            <p class="hn-kicker">Nos casamos</p>
+            <p class="hn-names">Kervens <span class="hn-amp">&amp;</span> Clariza</p>
+            <span class="hn-line"></span>
+            <p class="hn-phrase">20 · 03 · 27</p>
+            <p class="hn-phrase hn-honor">Tenemos el honor de invitarte a celebrar nuestra boda</p>
+        </div>
+    </div>
+
+    <main class="content">
+
+        <!-- 2. FRASE + PADRES + NOMBRES -->
+        <section class="sec sec-nombres">
+            <p class="frase">El amor nos ha llevado a este momento mágico.<br>Los invitamos a ser testigos de nuestra promesa de amor.</p>
+            <h1 class="nombres-script">
+                <span>Kervens</span>
+                <span class="y">y</span>
+                <span>Clariza</span>
+            </h1>
+        </section>
+
+        <!-- 3. FECHA, HORA Y LUGARES -->
+        <section class="sec sec-fecha">
+            <p class="sc-titulo honor">Tenemos el honor de invitarlos<br>a nuestro matrimonio<br>que se llevará a cabo el día</p>
+
+            <div class="fecha-hora" aria-label="Sábado 20 de marzo de 2027 a las 4:30 p.m.">
+                <div class="fh-fecha">
+                    <span class="fh-mes">Marzo</span>
+                    <span class="fh-dia">20</span>
+                    <span class="fh-anio">2027</span>
+                </div>
+                <span class="fh-barra"></span>
+                <div class="fh-hora">
+                    <span class="fh-num">4:30</span>
+                    <span class="fh-ampm">P.M.</span>
+                </div>
+            </div>
+
+            <img class="ilus sk-club" src="iconos/club-naval.webp" alt="Ilustración del Club Naval para Oficiales" width="900" height="508">
+            <p class="sc-lugar">Club Naval para Oficiales</p>
+            <p class="direccion">Ceremonia en la plataforma junto al mar<br>Puerto Sans Souci, Santo Domingo Este</p>
+            <button class="btn-negro" onclick="openLocation('ceremony')">Ubicación</button>
+
+            <p class="a-seguir">recepción a seguir</p>
+
+            <img class="sketch sk-fiesta" src="iconos/nuevo/fiesta.webp" alt="Ilustración de fiesta">
+            <div class="hora-sola">
+                <span class="fh-num">6:00</span>
+                <span class="fh-ampm">P.M.</span>
+            </div>
+            <p class="sc-lugar">Salón La Claraboya</p>
+            <p class="direccion">Segundo nivel, con terraza frente al mar<br>Club Naval para Oficiales</p>
+            <button class="btn-negro" onclick="openLocation('reception')">Ubicación</button>
+        </section>
+
+        <!-- 4. FOTO COMPLETA -->
+        <figure class="foto-full"><img src="foto-bn1.jpg?v=1" alt="Kervens y Clariza" loading="lazy" decoding="async"></figure>
+
+        <!-- 5. ITINERARIO -->
+        <section class="sec sec-itinerario">
+            <h2 class="titulo-esp">Itinerario</h2>
+            <div class="timeline">
+                <div class="t-row">
+                    <div class="t-txt"><span class="t-nom">Ceremonia</span><span class="t-hora">4:30 p.m.</span></div>
+                    <span class="t-tick"></span>
+                    <div class="t-ico"><img class="sketch" src="iconos/insp/anillos.webp" alt="Anillos"></div>
+                </div>
+                <div class="t-row">
+                    <div class="t-ico"><img class="sketch" src="iconos/insp/salon.webp" alt="Salón"></div>
+                    <span class="t-tick"></span>
+                    <div class="t-txt"><span class="t-nom">Recepción</span><span class="t-hora">6:00 p.m.</span></div>
+                </div>
+                <div class="t-row">
+                    <div class="t-txt"><span class="t-nom">Celebración</span><span class="t-hora t-rango">6:00 – 10:00 p.m.</span><span class="t-det">Brindis, actividades y festejo de los novios</span></div>
+                    <span class="t-tick"></span>
+                    <div class="t-ico"><img class="sketch" src="iconos/insp/brindis.webp" alt="Copas de brindis"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. CUENTA REGRESIVA + VESTIMENTA -->
+        <section class="sec sec-faltan">
+            <div class="arco">
+                <h2 class="arco-titulo">Faltan</h2>
+                <div class="cuenta">
+                    <div><span id="days">00</span><small>días</small></div>
+                    <div><span id="hours">00</span><small>horas</small></div>
+                    <div><span id="minutes">00</span><small>minutos</small></div>
+                    <div class="cuenta-seg"><span id="seconds">00</span><small>segundos</small></div>
+                </div>
+                <p class="arco-pie">Para nuestra<br>boda</p>
+            </div>
+
+            <div class="vestimenta">
+                <p class="v-kicker">Elegancia</p>
+                <h2 class="titulo-esp">Formal</h2>
+                <img class="sketch sk-vestimenta" src="iconos/insp/vestimenta-pareja.webp" alt="Pareja vestida de gala">
+                <p class="texto-it">Te pedimos vestir con elegancia formal, en los tonos de nuestra paleta de colores:</p>
+                <ul class="paleta" aria-label="Paleta de colores">
+                    <li><span class="sw" style="--c:#4B2E20"></span>Chocolate</li>
+                    <li><span class="sw" style="--c:#8A5A2B"></span>Cacao</li>
+                    <li><span class="sw" style="--c:#A8693A"></span>Caramelo</li>
+                    <li><span class="sw" style="--c:#D2B48C"></span>Camel</li>
+                    <li><span class="sw" style="--c:#EDC8A6"></span>Arena cálida</li>
+                    <li><span class="sw" style="--c:#E3D2B4"></span>Arena clara</li>
+                    <li><span class="sw" style="--c:#E6DCC6"></span>Lino</li>
+                    <li><span class="sw" style="--c:#B9A997"></span>Taupe</li>
+                    <li><span class="sw" style="--c:#FFF6E8"></span>Crema</li>
+                    <li><span class="sw" style="--c:#F4EFE4"></span>Marfil</li>
+                </ul>
+                <p class="paleta-nota"><span class="sw" style="--c:#C8B18E"></span>Champán beige, reservado para el novio</p>
+            </div>
+        </section>
+
+        <!-- 7. NO NIÑOS -->
+        <section class="sec sec-ninos">
+            <div class="arco arco-ninos">
+                <p class="texto-it">Amamos a sus pequeños, sin embargo esta celebración está destinada solo para adultos.</p>
+                <p class="texto-it">¡Agradecemos su comprensión!</p>
+                <p class="arco-titulo no-ninos">No niños</p>
+            </div>
+        </section>
+
+        <!-- 8. GALERÍA -->
+        <section class="sec sec-galeria">
+            <img class="ilus sk-camara" src="iconos/camara-sepia.webp" alt="Cámara de fotos" width="520" height="397">
+            <h2 class="titulo-esp">Galería</h2>
+            <div class="galeria" aria-roledescription="carrusel" aria-label="Galería de fotos">
+                <button class="gal-btn gal-prev" type="button" aria-label="Foto anterior">
+                    <svg viewBox="0 0 24 48" aria-hidden="true"><path d="M20 2 4 24l16 22" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+                </button>
+                <div class="gal-track" id="galTrack">
+                    <figure><img src="galeria/g1.jpg" alt="Kervens y Clariza" loading="lazy"></figure>
+                    <figure><img src="galeria/g2.jpg" alt="Kervens y Clariza abrazados" loading="lazy"></figure>
+                    <figure><img src="galeria/g3.jpg" alt="Kervens y Clariza en sesión de fotos" loading="lazy"></figure>
+                    <figure><img src="galeria/g4.jpg" alt="Selfie con amigos" loading="lazy"></figure>
+                    <figure><img src="galeria/g5.jpg" alt="Foto con amigos" loading="lazy"></figure>
+                    <figure><img src="galeria/g6.jpg" alt="Los novios con sus amigos" loading="lazy"></figure>
+                    <figure><img src="galeria/g7.jpg" alt="Los padrinos" loading="lazy"></figure>
+                    <figure><img src="galeria/g8.jpg" alt="Detalle de la novia" loading="lazy"></figure>
+                    <figure><img src="galeria/g9.jpg" alt="Momento divertido de la boda" loading="lazy"></figure>
+                </div>
+                <button class="gal-btn gal-next" type="button" aria-label="Foto siguiente">
+                    <svg viewBox="0 0 24 48" aria-hidden="true"><path d="m4 2 16 22L4 46" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+                </button>
+            </div>
+            <p class="gal-contador"><span id="galActual">1</span> / <span id="galTotal">9</span></p>
+            <div class="compartir-fotos">
+                <img class="ilus sk-subir" src="iconos/subir-fotos.webp" alt="Subir fotos" width="498" height="520">
+                <p class="texto-it">¿Tomaste fotos en la boda?<br>Compártelas con nosotros y ayúdanos a guardar cada momento.</p>
+                <a class="btn-negro btn-enlace" href="#" data-enlace="fotos" target="_blank" rel="noopener">Subir fotos</a>
+            </div>
+        </section>
+
+        <!-- 9. REGALOS + LUGARES RESERVADOS -->
+        <section class="sec sec-regalos">
+            <h2 class="titulo-esp">Regalos</h2>
+            <p class="texto-it">Nuestro mejor regalo será su compañía, pero si desean hacernos un obsequio, preparamos una mesa de regalos para ustedes.</p>
+            <img class="sketch sk-regalo" src="iconos/insp/regalo.webp" alt="Caja de regalo">
+            <a class="btn-negro btn-enlace" href="#" data-enlace="regalos" target="_blank" rel="noopener">Ver mesa de regalos</a>
+
+            <!-- Pases: se muestra cuando el enlace trae ?pases=2 o ?invitados=Nombre1,Nombre2 -->
+            <div class="arco arco-pases" id="pasesArco" hidden>
+                <p class="arco-titulo pases-tit">Hemos<br>reservado</p>
+                <p class="pases-num" id="pasesNum">2</p>
+                <p class="pases-pie">Lugares en su<br>honor</p>
+                <p class="pases-nombres" id="pasesNombres" hidden></p>
+            </div>
+        </section>
+
+        <!-- 10. ASISTENCIA -->
+        <section class="sec sec-asistencia">
+            <h2 class="titulo-esp">Asistencia</h2>
+            <p class="texto-it">Sería un placer para nosotros que pudieran acompañarnos. Agradecemos confirme su asistencia con anticipación.</p>
+            <img class="sketch sk-confirmar" src="iconos/insp/confirmar.webp" alt="Tarjeta de confirmación">
+            <a class="btn-negro btn-enlace" href="#" data-enlace="asistencia" target="_blank" rel="noopener">Confirmar asistencia</a>
+        </section>
+
+        <!-- 11. FOTO FINAL A PANTALLA COMPLETA -->
+        <figure class="foto-final"><img src="foto-bn3.jpg?v=1" alt="Kervens y Clariza" loading="lazy" decoding="async"></figure>
+    </main>
+
+    <div id="toast" class="toast" role="status"></div>
+
+    <script src="JAVAB.js?v=30" defer></script>
+</body>
+</html>
